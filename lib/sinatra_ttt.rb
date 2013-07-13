@@ -3,11 +3,15 @@ require './lib/sinatra_ui'
 
 class SinatraTTT < Sinatra::Base
   get '/' do
-    "Welcome to TTT! <a href=\"/game\">Click here to play a game</a>"
+    erb :welcome
   end
   
-  get '/game' do
-    'Some options'
+  post '/config' do
+    params[:player]
+  end
+  
+  get '/config' do
+    erb :configure
   end
 
   post '/game' do
