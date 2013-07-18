@@ -1,8 +1,8 @@
 require 'sinatra'
 require './lib/sinatra_ui'
-require 'ttt'
+require './lib/ttt'
 
-class SinatraTTT < Sinatra::Base
+class Sinatra_TTT < Sinatra::Base
   get '/' do
     erb :welcome
   end
@@ -12,15 +12,22 @@ class SinatraTTT < Sinatra::Base
   end  
   
   post '/config' do
-    TTT.configure_game(params[:marker], params[:opponent], params[:board_size])
+#     Sinatra_UI.configure_game(params[:marker], params[:opponent], params[:board_size])
   end
   
   post '/make_move' do
-    TTT.make_move(params[:square], params[:marker])
+    response.set_cookie('marker',     {:value => params[:marker],     :path => '/make_move'})
+    response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/make_move'})
+    response.set_cookie('board_size', {:value => params[:board_size], :path => '/make_move'})
+#     Sinatra_TTT.make_move(params[:square], params[:marker])
   end
 
   get '/output_board' do
     TTT.output_board(params[:board])
+  end
+  
+  get '/game' do
+    erb :game
   end  
 
   post '/game' do

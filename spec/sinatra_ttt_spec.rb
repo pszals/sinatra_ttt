@@ -2,10 +2,12 @@ require 'sinatra_ttt'
 require 'spec_helper'
 
 def app
-  SinatraTTT
+  Sinatra_TTT
 end
 
-describe SinatraTTT do
+describe Sinatra_TTT do
+  let(:ttt) { Sinatra_TTT.new }
+  
   describe 'ttt home page' do
     it 'retrieves a 200 response' do
       get '/'
@@ -22,13 +24,21 @@ describe SinatraTTT do
       
       post '/config', marker: marker, opponent: opponent, board_size: board_size
     end
+    
+#     it 'stores a value in the marker instance variable' do
+#       marker     = 'X'
+#       opponent   = 'human'
+#       board_size = '3'
+#       post '/config', marker: marker, opponent: opponent, board_size: board_size
+#       ttt.marker.should == 'X'
+#     end
   end
   
   context 'making a move on the board' do
     it 'sends a selected move to the board' do
       marker = 'X'
       square   = '1'      
-      TTT.should_receive(:make_move).with(square, marker)
+      ttt.should_receive(:make_move).with(square, marker)
       
       post '/make_move', marker: marker, square: square
     end
@@ -37,7 +47,7 @@ describe SinatraTTT do
   context 'outputting the board' do
     it 'puts the board on the screen in the browser' do
       board = '123456789'
-      TTT.should_receive(:output_board).with(board)
+      ttt.should_receive(:output_board).with(board)
       
       get '/output_board', board: '123456789'
     end
@@ -51,7 +61,7 @@ describe SinatraTTT do
     
     it 'sends a selection to restart' do
       restart_choice = 'yes'
-      TTT.should_receive(:restart).with(restart_choice)
+      ttt.should_receive(:restart).with(restart_choice)
       
       post '/restart', restart_choice: restart_choice
     end

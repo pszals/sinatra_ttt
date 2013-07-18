@@ -1,9 +1,15 @@
 require 'spec_helper'
 require 'sinatra_ui'
 
-describe SinatraUI do
-  it 'displays a board' do
-    SinatraUI.print_board('This is a board')
-    SinatraUI.messages[:board].should == 'This is a board'
+describe Sinatra_UI do
+  
+  let(:ui) { Sinatra_UI.new }
+  
+  it "returns opponent type of human" do
+    ui.get_opponent.should == "human"
+  end
+  
+  it "returns opponent type of computer" do
+    ui.get_opponent.should == "computer"
   end
 end

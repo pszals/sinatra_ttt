@@ -1,3 +1,3 @@
 require './lib/sinatra_ttt'
 
-SinatraTTT.run!
+Sinatra_TTT.run!
