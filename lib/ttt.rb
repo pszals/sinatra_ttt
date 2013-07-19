@@ -1,2 +1,0 @@
-class TTT
-end

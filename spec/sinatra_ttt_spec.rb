@@ -21,17 +21,8 @@ describe Sinatra_TTT do
       opponent   = 'human'
       board_size = '3'
       TTT.should_receive(:configure_game).with(marker, opponent, board_size)
-      
       post '/config', marker: marker, opponent: opponent, board_size: board_size
     end
-    
-#     it 'stores a value in the marker instance variable' do
-#       marker     = 'X'
-#       opponent   = 'human'
-#       board_size = '3'
-#       post '/config', marker: marker, opponent: opponent, board_size: board_size
-#       ttt.marker.should == 'X'
-#     end
   end
   
   context 'making a move on the board' do
@@ -48,7 +39,6 @@ describe Sinatra_TTT do
     it 'puts the board on the screen in the browser' do
       board = '123456789'
       ttt.should_receive(:output_board).with(board)
-      
       get '/output_board', board: '123456789'
     end
   end
@@ -62,11 +52,7 @@ describe Sinatra_TTT do
     it 'sends a selection to restart' do
       restart_choice = 'yes'
       ttt.should_receive(:restart).with(restart_choice)
-      
       post '/restart', restart_choice: restart_choice
     end
   end
-  
-  # Test that params contains options for player
-  # Start game should be at root and that ^
 end

@@ -1,8 +1,9 @@
 require 'sinatra'
 require './lib/sinatra_ui'
-require './lib/ttt'
+# require 'TTT'
 
-class Sinatra_TTT < Sinatra::Base
+
+class Sinatra_TTT < Sinatra::Base  
   get '/' do
     erb :welcome
   end
@@ -12,18 +13,16 @@ class Sinatra_TTT < Sinatra::Base
   end  
   
   post '/config' do
-#     Sinatra_UI.configure_game(params[:marker], params[:opponent], params[:board_size])
+    Sinatra_UI.configure_game(params[:marker], params[:opponent], params[:board_size])
   end
   
   post '/make_move' do
-    response.set_cookie('marker',     {:value => params[:marker],     :path => '/make_move'})
-    response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/make_move'})
-    response.set_cookie('board_size', {:value => params[:board_size], :path => '/make_move'})
-#     Sinatra_TTT.make_move(params[:square], params[:marker])
+#     response.set_cookie('square', {:value => params[:square_1], :path => '/game'})
+    redirect '/game'
   end
 
   get '/output_board' do
-    TTT.output_board(params[:board])
+#     TTT.output_board(params[:board])
   end
   
   get '/game' do
@@ -31,7 +30,12 @@ class Sinatra_TTT < Sinatra::Base
   end  
 
   post '/game' do
-     SinatraUI.print_board(' 1 | 2 | 3 ') 
+    response.set_cookie('marker',     {:value => params[:marker],     :path => '/game'})
+    response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/game'})
+    response.set_cookie('board_size', {:value => params[:board_size], :path => '/game'})
+    
+#     configure_game
+    erb :game
   end
   
   get '/restart' do
@@ -39,6 +43,32 @@ class Sinatra_TTT < Sinatra::Base
   end
   
   post '/restart' do
-    TTT.restart(params[:restart_choice])
+#     TTT.restart(params[:restart_choice])
   end
+  
+  def configure_game
+    ui = Sinatra_UI.new
+    @ai = Unbeatable_AI.new
+    configure_opponent
+    player_1 = Player.new('X')
+    player_2 = Player.new('O')
+    board = Board.new(player_1, player_2)
+    board.width = cookies[:board_size]
+    game = Game.new(board, ui, @ai, player_1, player_2)
+
+  end
+  
+  def configure_opponent
+    @ui.ask_for_opponent
+    opponent_type = @ui.get_opponent
+    if cookies[:opponent] == 'computer'
+      @ai.opponent = true
+    else
+      @ai.opponent = false
+    end
+  end
+  
+#   def configure_player_1(marker)
+#   
+#   end
 end
