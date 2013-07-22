@@ -17,8 +17,8 @@ class Sinatra_TTT < Sinatra::Base
   end
   
   post '/make_move' do
-#     response.set_cookie('square', {:value => params[:square_1], :path => '/game'})
-    redirect '/game'
+    response.set_cookie('square', {:value => params[:square_1], :path => '/game'})
+    render '/game'
   end
 
   get '/output_board' do
@@ -34,8 +34,15 @@ class Sinatra_TTT < Sinatra::Base
     response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/game'})
     response.set_cookie('board_size', {:value => params[:board_size], :path => '/game'})
     
-#     configure_game
     erb :game
+  end
+
+  def switch_current_player
+    erb :game
+  end
+  
+  def switch_current_player
+    session[:current_player] = other_player
   end
   
   get '/restart' do
@@ -68,7 +75,7 @@ class Sinatra_TTT < Sinatra::Base
     end
   end
   
-#   def configure_player_1(marker)
-#   
-#   end
+  def configure_player_1(marker)
+  
+  end
 end

@@ -20,7 +20,7 @@ describe Sinatra_TTT do
       marker     = 'X'
       opponent   = 'human'
       board_size = '3'
-      TTT.should_receive(:configure_game).with(marker, opponent, board_size)
+      Sinatra_TTT.should_receive(:configure_game).with(marker, opponent, board_size)
       post '/config', marker: marker, opponent: opponent, board_size: board_size
     end
   end
