@@ -29,3 +29,10 @@ div#result {
     margin: 0.5em;
     font: 24px sans-serif;
 }
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+

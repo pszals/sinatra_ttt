@@ -1,9 +1,12 @@
 require 'sinatra'
 require './lib/sinatra_ui'
+require 'sinatra/cookies'
 # require 'TTT'
 
 
-class Sinatra_TTT < Sinatra::Base  
+class Sinatra_TTT < Sinatra::Base
+  helpers Sinatra::Cookies
+  
   get '/' do
     erb :welcome
   end
@@ -17,8 +20,17 @@ class Sinatra_TTT < Sinatra::Base
   end
   
   post '/make_move' do
-    response.set_cookie('square', {:value => params[:square_1], :path => '/game'})
-    render '/game'
+    response.set_cookie("square_#{params[:square]}", cookies[:marker])
+    response.set_cookie('marker', opposite_marker)
+    erb :game
+  end
+  
+  def opposite_marker
+    if cookies[:marker] == 'X'
+      'O'
+    else
+      'X'
+    end
   end
 
   get '/output_board' do
@@ -30,10 +42,20 @@ class Sinatra_TTT < Sinatra::Base
   end  
 
   post '/game' do
-    response.set_cookie('marker',     {:value => params[:marker],     :path => '/game'})
+    response.set_cookie('marker',     {:value => params[:marker],     :path => '/'})
     response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/game'})
     response.set_cookie('board_size', {:value => params[:board_size], :path => '/game'})
     
+    response.set_cookie('square_1', {:value => ''})
+    response.set_cookie('square_2', {:value => ''})
+    response.set_cookie('square_3', {:value => ''})
+    response.set_cookie('square_4', {:value => ''})
+    response.set_cookie('square_5', {:value => ''})
+    response.set_cookie('square_6', {:value => ''})
+    response.set_cookie('square_7', {:value => ''})
+    response.set_cookie('square_8', {:value => ''})
+    response.set_cookie('square_9', {:value => ''})
+        
     erb :game
   end
 
