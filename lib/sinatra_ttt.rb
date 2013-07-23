@@ -39,10 +39,6 @@ class Sinatra_TTT < Sinatra::Base
       'X'
     end
   end
-
-  get '/output_board' do
-#     TTT.output_board(params[:board])
-  end
   
   get '/game' do
     erb :game
@@ -66,19 +62,11 @@ class Sinatra_TTT < Sinatra::Base
         
     erb :game
   end
-
-  def switch_current_player
-    erb :game
-  end
     
   get '/restart' do
     erb :welcome
   end
-  
-  post '/restart' do
-#     TTT.restart(params[:restart_choice])
-  end
-  
+    
   def configure_game
     ui = Sinatra_UI.new
     @ai = Unbeatable_AI.new
@@ -99,9 +87,5 @@ class Sinatra_TTT < Sinatra::Base
     else
       @ai.opponent = false
     end
-  end
-  
-  def configure_player_1(marker)
-  
   end
 end

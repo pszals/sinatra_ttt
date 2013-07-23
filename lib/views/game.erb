@@ -1,13 +1,17 @@
 <html>
   <head>
       <meta charset="utf-8" />
-      <title>Tic Tac Toe demonstration</title>
+      <title>Tic Tac Toe</title>
       <link rel="stylesheet" type="text/css" href="tictac.css" />
   </head>
   
   <body id="home">
     <div>
       <h1>Tic Tac Toe</h1>
+      <% if cookies[:turn_incrementer] == '9' %>
+      <p>Game Over</p>
+      <% end %>
+
       <form action="/make_move" method="POST">
         <table id="tictac">
           <tbody>
