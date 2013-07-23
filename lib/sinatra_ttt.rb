@@ -20,9 +20,14 @@ class Sinatra_TTT < Sinatra::Base
   end
   
   post '/make_move' do
-    response.set_cookie("square_#{params[:square]}", cookies[:marker])
-    response.set_cookie('marker', opposite_marker)
-    erb :game
+    
+    if cookies["square_#{params[:square]}"] == ''
+      response.set_cookie("square_#{params[:square]}", cookies[:marker])
+      response.set_cookie('marker', opposite_marker)
+      erb :game
+    else
+      erb :game    
+    end
   end
   
   def opposite_marker
