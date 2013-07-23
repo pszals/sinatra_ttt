@@ -11,57 +11,64 @@
       <% if cookies[:turn_incrementer] == '9' %>
         <p>Game Over</p>
         <form action="/config" method="GET">
-        <input type="submit" value="Restart?">
+        <input type="submit" value="Restart">
       <% end %>
-
       <form action="/make_move" method="POST">
         <table id="tictac">
           <tbody>
             <tr>
               <td id="cell0">
                 <%= cookies[:square_1] %>
-                <input type="radio" name="square" value="1" checked="checked">
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="1">
               </td>
               <td id="cell1">
                 <%= cookies[:square_2] %>            
-                <input type="radio" name="square" value="2">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="2">
               </td>
               <td id="cell2">
                 <%= cookies[:square_3] %>            
-                <input type="radio" name="square" value="3">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="3">
               </td>
             </tr>
             <tr>
               <td id="cell3">
                 <%= cookies[:square_4] %>            
-                <input type="radio" name="square" value="4">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="4">
               </td>
               <td id="cell4">
                 <%= cookies[:square_5] %>                        
-                <input type="radio" name="square" value="5">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="5">
               </td>
               <td id="cell5">
                 <%= cookies[:square_6] %>            
-                <input type="radio" name="square" value="6">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="6">
               </td>
             </tr>
             <tr>
               <td id="cell6">
                 <%= cookies[:square_7] %>            
-                <input type="radio" name="square" value="7">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="7">
               </td>
               <td id="cell7">
                 <%= cookies[:square_8] %>            
-                <input type="radio" name="square" value="8">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="8">
               </td>
               <td id="cell8">
                 <%= cookies[:square_9] %>            
-                <input type="radio" name="square" value="9">      
+                <form action="/make_move" method="POST">
+                <input type="submit" name="square" value="9">
               </td>
             </tr>
           </tbody>
         </table>
-        <input type="submit">
       </form>
     </div>
   </body>
