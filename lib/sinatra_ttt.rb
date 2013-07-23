@@ -6,7 +6,7 @@ require 'sinatra/cookies'
 
 class Sinatra_TTT < Sinatra::Base
   helpers Sinatra::Cookies
-  
+  attr_reader :params
   get '/' do
     erb :welcome
   end
@@ -24,6 +24,8 @@ class Sinatra_TTT < Sinatra::Base
     if cookies["square_#{params[:square]}"] == ''
       response.set_cookie("square_#{params[:square]}", cookies[:marker])
       response.set_cookie('marker', opposite_marker)
+      response.set_cookie('turn_incrementer', (cookies['turn_incrementer'].to_i + 1))
+#       Sinatra_UI.get_square_to_mark (reads from the cookie)
       erb :game
     else
       erb :game    
@@ -50,6 +52,7 @@ class Sinatra_TTT < Sinatra::Base
     response.set_cookie('marker',     {:value => params[:marker],     :path => '/'})
     response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/game'})
     response.set_cookie('board_size', {:value => params[:board_size], :path => '/game'})
+    response.set_cookie('turn_incrementer', {:value => 0})
     
     response.set_cookie('square_1', {:value => ''})
     response.set_cookie('square_2', {:value => ''})
@@ -67,11 +70,7 @@ class Sinatra_TTT < Sinatra::Base
   def switch_current_player
     erb :game
   end
-  
-  def switch_current_player
-    session[:current_player] = other_player
-  end
-  
+    
   get '/restart' do
     erb :welcome
   end
