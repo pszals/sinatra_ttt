@@ -45,9 +45,9 @@ class Sinatra_TTT < Sinatra::Base
   end  
 
   post '/game' do
-    response.set_cookie('marker',     {:value => params[:marker],     :path => '/'})
-    response.set_cookie('opponent',   {:value => params[:opponent],   :path => '/game'})
-    response.set_cookie('board_size', {:value => params[:board_size], :path => '/game'})
+    response.set_cookie('marker',           {:value => params[:marker],     :path => '/'})
+    response.set_cookie('opponent',         {:value => params[:opponent],   :path => '/game'})
+    response.set_cookie('board_size',       {:value => params[:board_size], :path => '/game'})
     response.set_cookie('turn_incrementer', {:value => 0})
     
     response.set_cookie('square_1', {:value => ''})

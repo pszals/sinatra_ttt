@@ -9,7 +9,9 @@
     <div>
       <h1>Tic Tac Toe</h1>
       <% if cookies[:turn_incrementer] == '9' %>
-      <p>Game Over</p>
+        <p>Game Over</p>
+        <form action="/config" method="GET">
+        <input type="submit" value="Restart?">
       <% end %>
 
       <form action="/make_move" method="POST">
