@@ -1,7 +1,7 @@
 PATH
   remote: /Users/pszalwinski/GoogleDrive/programming/Projects/ruby_tictactoe
   specs:
-    tic_tac_toe (0.0.0)
+    pszals_ttt (0.0.5)
 
 GEM
   remote: https://rubygems.org/
@@ -47,9 +47,9 @@ PLATFORMS
 
 DEPENDENCIES
   pry
+  pszals_ttt!
   rack
   rack-test
   rspec
   sinatra
   sinatra-contrib
-  tic_tac_toe!

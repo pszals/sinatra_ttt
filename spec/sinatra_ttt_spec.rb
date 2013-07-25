@@ -1,5 +1,5 @@
 require 'sinatra_ttt'
-require 'spec_helper'
+# require 'spec_helper'
 
 def app
   Sinatra_TTT

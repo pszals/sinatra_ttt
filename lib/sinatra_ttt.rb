@@ -2,12 +2,10 @@ require 'sinatra'
 require './lib/sinatra_ui'
 require 'sinatra/cookies'
 
+
 class Sinatra_TTT < Sinatra::Base
-  
   helpers Sinatra::Cookies
- 
   attr_reader :params
-  
   get '/' do
     erb :welcome
   end
@@ -15,7 +13,7 @@ class Sinatra_TTT < Sinatra::Base
   get '/config' do
     erb :configure
   end  
-    
+  
   post '/make_move' do
     if cookies["square_#{params[:square]}"] == ''
       response.set_cookie("square_#{params[:square]}", cookies[:marker])
@@ -45,16 +43,8 @@ class Sinatra_TTT < Sinatra::Base
     response.set_cookie('board_size',       {:value => params[:board_size], :path => '/game'})
     response.set_cookie('turn_incrementer', {:value => 0})
     
-    response.set_cookie('square_1', {:value => ''})
-    response.set_cookie('square_2', {:value => ''})
-    response.set_cookie('square_3', {:value => ''})
-    response.set_cookie('square_4', {:value => ''})
-    response.set_cookie('square_5', {:value => ''})
-    response.set_cookie('square_6', {:value => ''})
-    response.set_cookie('square_7', {:value => ''})
-    response.set_cookie('square_8', {:value => ''})
-    response.set_cookie('square_9', {:value => ''})
-        
+    (1..9).each {|n| response.set_cookie("square_#{n}", {:value => ''})}
+
     erb :game
   end
     
