@@ -1,11 +1,12 @@
 require 'sinatra'
-require './lib/sinatra_ui'
 require 'sinatra/cookies'
 
 
 class Sinatra_TTT < Sinatra::Base
   helpers Sinatra::Cookies
+  
   attr_reader :params
+  
   get '/' do
     erb :welcome
   end
@@ -15,21 +16,14 @@ class Sinatra_TTT < Sinatra::Base
   end  
   
   post '/make_move' do
-    if cookies["square_#{params[:square]}"] == ''
-      response.set_cookie("square_#{params[:square]}", cookies[:marker])
+    selected_square = "square_#{params[:square]}"
+    if cookies[selected_square] == ''
+      response.set_cookie(selected_square, cookies[:marker])
       response.set_cookie('marker', opposite_marker)
       response.set_cookie('turn_incrementer', (cookies['turn_incrementer'].to_i + 1))
       erb :game
     else
       erb :game    
-    end
-  end
-  
-  def opposite_marker
-    if cookies[:marker] == 'X'
-      'O'
-    else
-      'X'
     end
   end
   
@@ -50,5 +44,13 @@ class Sinatra_TTT < Sinatra::Base
     
   get '/restart' do
     erb :welcome
+  end
+  
+  def opposite_marker
+    if cookies[:marker] == 'X'
+      'O'
+    else
+      'X'
+    end
   end
 end
