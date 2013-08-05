@@ -13,7 +13,8 @@ class Sinatra_UI
   def ask_for_square_to_mark
   end
 
-  def take_turn
+  def place_marker(marker)
+    puts marker
   end
 
   def display_winner(winner)

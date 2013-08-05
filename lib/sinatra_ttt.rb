@@ -3,16 +3,18 @@ $LOAD_PATH.unshift File.expand_path('../../../ruby_tictactoe/lib', __FILE__)
 require 'sinatra'
 require 'sinatra/cookies'
 require './lib/sinatra_ui'
-require 'new_game'
+require 'web_game'
 require 'bundler'
 Bundler.require(:default)
+Bundler.setup
 
 class Sinatra_TTT < Sinatra::Base
   helpers Sinatra::Cookies
   
-  attr_reader :params, :current_board
+  attr_reader :params, :current_board, :web_game
   
   get '/' do
+    clear_cookies
     erb :welcome
   end
 
@@ -21,35 +23,31 @@ class Sinatra_TTT < Sinatra::Base
   end  
   
   post '/make_move' do
+    @web_game.set_move(params[:square])
+
     selected_square = "square_#{params[:square]}"
-    if cookies[selected_square] != 'X' || cookies[selected_square] != 'O'
-      response.set_cookie(selected_square, cookies[:marker])
-      response.set_cookie('marker', opposite_marker)
-      response.set_cookie('turn_incrementer', (cookies['turn_incrementer'].to_i + 1))
+    marker = cookies[:marker]
+    if  square_empty?(selected_square)
+      set_move_cookies(selected_square, marker) 
       gather_squares_from_cookies
-      response.set_cookie('current_board', {:value => @current_board})
       run_game
       erb :game
     else
       erb :game    
     end
   end
-  
-  def run_game
-    new_game = New_Game.new(Sinatra_UI.new, @current_board) 
-    new_game.game_loop
-  end
 
-  def gather_squares_from_cookies
-    @current_board = []
-    (1..9).to_a.each do |n|
-      @current_board << cookies["square_#{n}"] 
-    end
-  end
-  
   get '/game' do
+    @web_game
+    @end_of_game_message = message
     erb :game
   end  
+
+  def message
+    if @web_game.over?
+      "THE GAME IS OVER!!!"
+    end
+  end
 
   post '/game' do
     response.set_cookie('marker',           {:value => params[:marker],     :path => '/'})
@@ -63,6 +61,44 @@ class Sinatra_TTT < Sinatra::Base
     
   get '/restart' do
     erb :welcome
+  end
+  
+  def square_empty?(selected_square)
+    cookies[selected_square] != 'X' && cookies[selected_square] != 'O'
+  end
+
+  def set_move_cookies(square, marker)
+      response.set_cookie(square, cookies[:marker])
+      response.set_cookie('marker', opposite_marker)
+      response.set_cookie('turn_incrementer', (cookies['turn_incrementer'].to_i + 1))
+  end
+  
+  def run_game
+    puts @current_board
+    @new_game = New_Game.new(Sinatra_UI.new, board_size, first_player_peice, second_player_peice) 
+    @current_board = new_game.board #=> ["", ""]
+    new_game.run_game
+  end
+
+  def gather_squares_from_cookies
+    @current_board = []
+    (1..9).to_a.each do |n|
+      @current_board << cookies["square_#{n}"] 
+    end
+    response.set_cookie('current_board', {:value => @current_board})
+  end
+
+  def clear_cookies
+    empty_board.each do |n|
+      response.set_cookie("square_#{n}", n)
+    end
+    response.set_cookie('turn_incrementer', 0)
+    response.set_cookie('current_board', empty_board)
+    response.set_cookie('marker', 'X')
+  end
+
+  def empty_board
+    (1..9).to_a
   end
   
   def opposite_marker
@@ -88,7 +124,7 @@ class Sinatra_TTT < Sinatra::Base
   end
 
   def integer_board
-    (1..params[:board_size]**2).to_a
+    (1..params[:board_size].to_i**2).to_a
   end
 
   def squares_to_string
@@ -96,7 +132,7 @@ class Sinatra_TTT < Sinatra::Base
   end
 
   def setup_board
-    (1..9).each {|n| response.set_cookie("square_#{n}", {:value => "#{n}"})}
-    @current_board = []
+    @current_board = squares_to_string 
+    @current_board.each {|n| response.set_cookie("square_#{n}", {:value => "#{n}"})}
   end
 end

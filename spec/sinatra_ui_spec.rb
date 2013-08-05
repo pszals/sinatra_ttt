@@ -23,7 +23,8 @@ describe Sinatra_UI do
 
   it "provides a message with given winner" do
     winner = "X"
-    ui.puts_winner(winner).should == "Player X wins!"
+    ui.should_receive(:puts).with("Player X wins!")
+    ui.display_winner('X')
   end
 
   it "provides a 'Tie Game' message" do
@@ -39,7 +40,8 @@ describe Sinatra_UI do
     ui.get_input.should == nil
   end
 
-  it "takes a turn" do
-    ui.take_turn.should == nil
+  it "places a marker" do
+    ui.should_receive(:puts).with('X')
+    ui.place_marker('X')
   end
 end	

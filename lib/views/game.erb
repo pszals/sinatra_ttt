@@ -8,6 +8,7 @@
   <body id="home">
     <div>
       <h1>Tic Tac Toe</h1>
+      <h1><%= @end_of_game_message %></h1>
       <% if cookies[:turn_incrementer] == '9' %>
         <p>Game Over</p>
         <form action="/config" method="GET">

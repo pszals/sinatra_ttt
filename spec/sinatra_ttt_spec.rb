@@ -8,6 +8,7 @@ end
 describe Sinatra_TTT do
   let(:ttt) { Sinatra_TTT.new }
   
+
   describe 'ttt home page' do
     it 'retrieves a 200 response' do
       get '/'
@@ -20,8 +21,7 @@ describe Sinatra_TTT do
       marker     = 'X'
       opponent   = 'human'
       board_size = '3'
-      Sinatra_TTT.should_receive(:configure_game).with(marker, opponent, board_size)
-      post '/config', marker: marker, opponent: opponent, board_size: board_size
+      post '/game', marker: marker, opponent: opponent, board_size: board_size
     end
   end
   
@@ -29,8 +29,7 @@ describe Sinatra_TTT do
     it 'sends a selected move to the board' do
       marker = 'X'
       square   = '1'      
-      ttt.should_receive(:make_move).with(square, marker)
-      
+      ttt.should_receive(:run_game)      
       post '/make_move', marker: marker, square: square
     end
   end
