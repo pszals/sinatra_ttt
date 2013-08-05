@@ -23,7 +23,7 @@ class Sinatra_TTT < Sinatra::Base
   end  
   
   post '/make_move' do
-    @web_game.set_move(params[:square])
+    @web_game.make_move(params[:square])
 
     selected_square = "square_#{params[:square]}"
     marker = cookies[:marker]
@@ -50,6 +50,9 @@ class Sinatra_TTT < Sinatra::Base
   end
 
   post '/game' do
+    @configuration = Configuration.new(params[:marker], params[:opponent], params[:board_size], Sinatra_UI.new)
+    @web_game = WebGame.new(@configuration)
+
     response.set_cookie('marker',           {:value => params[:marker],     :path => '/'})
     response.set_cookie('opponent',         {:value => params[:opponent],   :path => '/game'})
     response.set_cookie('board_size',       {:value => params[:board_size], :path => '/game'})
