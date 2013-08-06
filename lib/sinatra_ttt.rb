@@ -51,13 +51,8 @@ class Sinatra_TTT < Sinatra::Base
 
   post '/game' do
     @configuration = Configuration.new(params[:marker], params[:opponent], params[:board_size], Sinatra_UI.new)
-    @web_game = WebGame.new(@configuration)
-
-    response.set_cookie('marker',           {:value => params[:marker],     :path => '/'})
-    response.set_cookie('opponent',         {:value => params[:opponent],   :path => '/game'})
-    response.set_cookie('board_size',       {:value => params[:board_size], :path => '/game'})
-    response.set_cookie('turn_incrementer', {:value => 0})
-    setup_board
+    @configuration.configure_game
+    @web_game = WebGame.new
 
     erb :game
   end
@@ -82,6 +77,7 @@ class Sinatra_TTT < Sinatra::Base
     @current_board = new_game.board #=> ["", ""]
     new_game.run_game
   end
+
 
   def gather_squares_from_cookies
     @current_board = []
