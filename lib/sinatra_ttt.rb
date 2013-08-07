@@ -5,6 +5,8 @@ require 'sinatra/cookies'
 require './lib/sinatra_ui'
 require 'webgame'
 require 'bundler'
+require 'configuration'
+
 Bundler.require(:default)
 Bundler.setup
 
@@ -21,8 +23,9 @@ class Sinatra_TTT < Sinatra::Base
   end  
   
   post '/make_move' do
-    @web_game.make_move(params[:square])
+    @@web_game.make_move(params[:square])
     erb :game    
+    puts @@web_game.board.current_board
   end
 
   get '/game' do
@@ -30,14 +33,20 @@ class Sinatra_TTT < Sinatra::Base
   end  
 
   def message
-    if @web_game.over?
+    if @@web_game.over?
       "THE GAME IS OVER!!!"
     end
   end
 
+  def start_up_game(mark, opponent, board_size)
+    configs = Configuration.new(mark, opponent, board_size, Sinatra_UI.new)
+    @@web_game = WebGame.new(configs)
+  end
+
   post '/game' do
-    @configuration = Configuration.new(params[:marker], params[:opponent], params[:board_size], Sinatra_UI.new)
-    @web_game = WebGame.new(@configuration)
+#    configs = Configuration.new(params[:marker], params[:opponent], params[:board_size], Sinatra_UI.new)
+#    @web_game = WebGame.new(configs)
+    start_up_game(params[:marker], params[:opponent], params[:board_size])
     erb :game
   end
  
