@@ -25,7 +25,7 @@ class Sinatra_TTT < Sinatra::Base
   post '/make_move' do
     @@web_game.make_move(params[:square])
     @board = @@web_game.board
-    @end_of_game_message = @@web_game.winner
+    @end_of_game_message = message
     erb :game    
   end
 
@@ -35,8 +35,11 @@ class Sinatra_TTT < Sinatra::Base
   end  
 
   def message
-    if @@web_game.over?
-      "THE GAME IS OVER!!!"
+    if @@web_game.winner == :no_winner
+    elsif @@web_game.winner == 'X'
+      "Player X Wins!"
+    elsif @@web_game.winner == 'O'
+      "Player O Wins!"
     end
   end
 
