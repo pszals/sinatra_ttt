@@ -25,10 +25,10 @@ class Sinatra_TTT < Sinatra::Base
   post '/make_move' do
     @@web_game.make_move(params[:square])
     erb :game    
-    puts @@web_game.board.current_board
   end
 
   get '/game' do
+    @board = @@web_game.board.current_board
     erb :game
   end  
 
@@ -47,6 +47,7 @@ class Sinatra_TTT < Sinatra::Base
 #    configs = Configuration.new(params[:marker], params[:opponent], params[:board_size], Sinatra_UI.new)
 #    @web_game = WebGame.new(configs)
     start_up_game(params[:marker], params[:opponent], params[:board_size])
+    @board = @@web_game.board
     erb :game
   end
  

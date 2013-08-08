@@ -12,47 +12,16 @@
       <form action="/make_move" method="POST">
         <table id="tictac">
           <tbody>
+            <% @board.winning_rows.each do |row| %>
             <tr>
-              <td id="cell0">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="1">
-              </td>
-              <td id="cell1">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="2">
-              </td>
-              <td id="cell2">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="3">
-              </td>
+              <% row.each_with_index do |square, index|%>
+                <td id=<%="cell#{index}"%>>
+                  <form action="/make_move" method="POST">
+                    <input type="submit" name="square" value=<%="#{square}"%>>
+                </td>
+              <% end %>
             </tr>
-            <tr>
-              <td id="cell3">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="4">
-              </td>
-              <td id="cell4">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="5">
-              </td>
-              <td id="cell5">
-                <input type="submit" name="square" value="6">
-              </td>
-            </tr>
-            <tr>
-              <td id="cell6">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="7">
-              </td>
-              <td id="cell7">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="8">
-              </td>
-              <td id="cell8">
-                <form action="/make_move" method="POST">
-                <input type="submit" name="square" value="9">
-              </td>
-            </tr>
+          <% end %>
           </tbody>
         </table>
       </form>
