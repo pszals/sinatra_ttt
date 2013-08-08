@@ -12,7 +12,7 @@
       <form action="/make_move" method="POST">
         <table id="tictac">
           <tbody>
-            <% @board.winning_rows.each do |row| %>
+            <% @board.rows.each do |row| %>
             <tr>
               <% row.each_with_index do |square, index|%>
                 <td id=<%="cell#{index}"%>>

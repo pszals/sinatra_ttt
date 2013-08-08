@@ -24,6 +24,8 @@ class Sinatra_TTT < Sinatra::Base
   
   post '/make_move' do
     @@web_game.make_move(params[:square])
+    @board = @@web_game.board
+    @end_of_game_message = @@web_game.winner
     erb :game    
   end
 
