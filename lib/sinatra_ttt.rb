@@ -34,21 +34,7 @@ class Sinatra_TTT < Sinatra::Base
     erb :game
   end  
 
-  def message
-    if @@web_game.winner == :no_winner
-    elsif @@web_game.winner == 'X'
-      "Player X Wins!"
-    elsif @@web_game.winner == 'O'
-      "Player O Wins!"
-    end
-  end
-
-  def start_up_game(mark, opponent, board_size)
-    configs = Configuration.new(mark, opponent, board_size, Sinatra_UI.new)
-    @@web_game = WebGame.new(configs)
-  end
-
-  post '/game' do
+    post '/game' do
     start_up_game(params[:marker], params[:opponent], params[:board_size])
     @board = @@web_game.board
     erb :game
@@ -56,5 +42,14 @@ class Sinatra_TTT < Sinatra::Base
  
   get '/restart' do
     erb :welcome
+  end
+
+  def start_up_game(mark, opponent, board_size)
+    configs = Configuration.new(mark, opponent, board_size, Sinatra_UI.new)
+    @@web_game = WebGame.new(configs)
+  end
+ 
+  def message
+    @@web_game.game_over_message
   end
 end
