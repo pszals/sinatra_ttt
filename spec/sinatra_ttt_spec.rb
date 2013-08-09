@@ -29,29 +29,15 @@ describe Sinatra_TTT do
     it 'sends a selected move to the board' do
       marker = 'X'
       square   = '1'      
-      ttt.should_receive(:run_game)      
-      post '/make_move', marker: marker, square: square
+      ttt.web_game.should_receive(:make_move)      
+      post '/make_move'   
     end
   end
-  
-  context 'outputting the board' do
-    it 'puts the board on the screen in the browser' do
-      board = '123456789'
-      ttt.should_receive(:output_board).with(board)
-      get '/output_board', board: '123456789'
-    end
-  end
-  
+   
   context 'restarting the game' do
     it 'asks user to restart' do      
       get '/restart'
       last_response.status.should == 200
-    end
-    
-    it 'sends a selection to restart' do
-      restart_choice = 'yes'
-      ttt.should_receive(:restart).with(restart_choice)
-      post '/restart', restart_choice: restart_choice
     end
   end
 end

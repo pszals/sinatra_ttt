@@ -29,12 +29,7 @@ class Sinatra_TTT < Sinatra::Base
     erb :game    
   end
 
-  get '/game' do
-    @board = @@web_game.board.current_board
-    erb :game
-  end  
-
-    post '/game' do
+  post '/game' do
     start_up_game(params[:marker], params[:opponent], params[:board_size])
     @board = @@web_game.board
     erb :game

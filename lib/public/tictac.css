@@ -6,7 +6,7 @@ body > * {
 }
 
 h1 {
-    color: #930;
+    color: #339900;
 }
 
 table#tictac td {
@@ -16,7 +16,7 @@ table#tictac td {
     vertical-align: middle;
     font: bold 36px sans-serif;
 }
-
+/*
 td#cell0, td#cell1, td#cell2, td#cell3, td#cell4, td#cell5 {
     border-bottom: 3px solid #930;
 }
@@ -24,7 +24,7 @@ td#cell0, td#cell1, td#cell2, td#cell3, td#cell4, td#cell5 {
 td#cell0, td#cell1, td#cell3, td#cell4, td#cell6, td#cell7 {
     border-right: 3px solid #930;
 }
-
+*/
 div#result {
     margin: 0.5em;
     font: 24px sans-serif;
