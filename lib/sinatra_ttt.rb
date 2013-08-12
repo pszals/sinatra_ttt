@@ -23,7 +23,7 @@ class Sinatra_TTT < Sinatra::Base
   end  
   
   post '/make_move' do
-    @@web_game.make_move(params[:square])
+    @@web_game.play_game(params[:square])
     @board = @@web_game.board
     @end_of_game_message = message
     erb :game    
