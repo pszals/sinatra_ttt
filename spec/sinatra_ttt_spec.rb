@@ -30,6 +30,7 @@ describe Sinatra_TTT do
       marker = 'X'
       square   = '1'      
       post '/play_game'   
+      last_response.status.should == 200
     end
   end
    
