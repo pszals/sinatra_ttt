@@ -5,12 +5,10 @@ describe Sinatra_UI do
   
   it "provides a message with given winner" do
     winner = "X"
-    ui.should_receive("Player X wins!")
-    ui.display_winner('X')
+    ui.display_winner('X').should == "Player X wins!"
   end
 
   it "provides a 'Tie Game' message" do
-    ui.should_receive("Tie Game!")
-    ui.display_tie
+    ui.display_tie.should == "Tie Game!"
   end
 end	

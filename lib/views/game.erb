@@ -9,14 +9,14 @@
     <div>
       <h1>Tic Tac Toe</h1>
       <h1><%= @end_of_game_message %></h1>
-      <form action="/make_move" method="POST">
+      <form action="/play_game" method="POST">
         <table id="tictac">
           <tbody>
             <% @board.rows.each do |row| %>
             <tr>
               <% row.each_with_index do |square, index|%>
                 <td id=<%="cell#{index}"%>>
-                  <form action="/make_move" method="POST">
+                  <form action="/play_game" method="POST">
                     <input type="submit" name="square" value=<%="#{square}"%>>
                 </td>
               <% end %>

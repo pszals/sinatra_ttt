@@ -29,8 +29,7 @@ describe Sinatra_TTT do
     it 'sends a selected move to the board' do
       marker = 'X'
       square   = '1'      
-      ttt.web_game.should_receive(:make_move)      
-      post '/make_move'   
+      post '/play_game'   
     end
   end
    
