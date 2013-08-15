@@ -24,14 +24,14 @@ class Sinatra_TTT < Sinatra::Base
   
   post '/play_game' do
     @@web_game.play_game(params[:square])
-    @board = @@web_game.board
+    @board = @@web_game.rules
     @end_of_game_message = message
     erb :game    
   end
 
   post '/game' do
     start_up_game(params[:marker], params[:opponent], params[:board_size])
-    @board = @@web_game.board
+    @board = @@web_game.rules
     erb :game
   end
  
